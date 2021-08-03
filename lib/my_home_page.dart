@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'constants.dart';
 
@@ -60,9 +61,12 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          print('$latitude_label${latitudeTextController.text}');
-          print('$longitude_label${longitudeTextController.text}');
+        onPressed: () async {
+          final url =
+              'https://www.google.com/maps/search/?api=1&query=${latitudeTextController.text},${longitudeTextController.text}';
+          if (await canLaunch(url)) {
+            launch(url, forceSafariVC: false);
+          }
         },
         tooltip: floating_action_button_tooltip,
         child: Icon(Icons.map),
